@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <a href="Landing_page.html" title>Bhandari's Market | Electronics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen" x-data="electronicsPage()">
+
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <a href="Landing_page.html" class="text-xl font-bold text-slate-800">Bhandari's <span class="text-blue-600">Market</span></a>
+            </div>
+            <div class="flex items-center space-x-6 text-sm font-semibold text-slate-600">
+                <a href="Home.html" class="hover:text-blue-600 transition">Home</a>
+                <span class="text-slate-300">/</span>
+                <span class="text-blue-600">Electronics</span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+            <div class="max-w-2xl">
+                <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">Smart <span class="text-blue-600">Electronics</span></h1>
+                <p class="text-slate-500 mt-4 text-lg font-medium italic">"The latest tech, gadgets, and lighting for your modern home."</p>
+            </div>
+            
+            <div class="flex flex-wrap gap-2">
+                <template x-for="cat in ['All', 'Laptops', 'Mobiles', 'Chargers', 'Lamps', 'Bulbs']">
+                    <button 
+                        @click="activeTag = cat"
+                        :class="activeTag === cat ? 'bg-blue-600 text-white' : 'bg-white text-slate-600 hover:bg-blue-50 border-slate-200'"
+                        class="px-6 py-2.5 rounded-full text-xs font-black uppercase tracking-widest border transition-all shadow-sm"
+                        x-text="cat">
+                    </button>
+                </template>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
+            <template x-for="item in filteredItems()" :key="item.id">
+                <div class="bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-2xl transition-all duration-500 group flex flex-col">
+                    
+                    <div class="relative h-64 overflow-hidden" x-data="{ current: 0 }">
+                        <template x-for="(img, i) in item.images" :key="i">
+                            <img 
+                                x-show="current === i" 
+                                :src="img" 
+                                class="w-full h-full object-cover transform transition duration-1000 group-hover:scale-110"
+                                x-transition:enter="opacity-0 translate-x-4"
+                                x-transition:enter-end="opacity-100 translate-x-0"
+                            >
+                        </template>
+
+                        <div class="absolute inset-0 flex items-center justify-between px-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button @click="current = (current === 0 ? 2 : current - 1)" class="w-9 h-9 bg-white/90 rounded-full shadow-lg flex items-center justify-center text-slate-800 hover:bg-white transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <button @click="current = (current === 2 ? 0 : current + 1)" class="w-9 h-9 bg-white/90 rounded-full shadow-lg flex items-center justify-center text-slate-800 hover:bg-white transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                        </div>
+
+                        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-1.5">
+                            <template x-for="(img, i) in item.images">
+                                <div :class="current === i ? 'w-5 bg-blue-500' : 'w-1.5 bg-white/60'" class="h-1.5 rounded-full transition-all"></div>
+                            </template>
+                        </div>
+
+                        <div class="absolute top-4 right-4">
+                            <span class="bg-white/95 backdrop-blur-sm text-slate-900 font-black px-4 py-1.5 rounded-full shadow-lg" x-text="'$' + item.price"></span>
+                        </div>
+                    </div>
+
+                    <div class="p-6 flex flex-col flex-grow">
+                        <div class="mb-4">
+                            <span class="text-blue-600 text-[10px] font-black uppercase tracking-tighter" x-text="item.tag"></span>
+                            <h3 class="text-xl font-bold text-slate-800 mt-1" x-text="item.name"></h3>
+                            <p class="text-slate-500 text-sm mt-3 leading-relaxed" x-text="item.desc"></p>
+                        </div>
+                        
+                        <div class="mt-auto space-y-3">
+                            <button @click="processPurchase(item)" class="w-full bg-blue-600 text-white font-bold py-4 rounded-2xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-100 flex items-center justify-center gap-2 transform active:scale-95">
+                                Buy Now
+                            </button>
+                            <button class="w-full text-slate-400 font-bold text-xs py-2 hover:text-slate-600 transition tracking-widest uppercase">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </main>
+
+    <script>
+        function electronicsPage() {
+            return {
+                activeTag: 'All',
+                items: [
+                    { id: 1, tag: 'Laptops', name: 'UltraBook Pro 14', price: 1299, desc: 'High-performance laptop with 16GB RAM and sleek aluminum finish.', images: ['https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=600'] },
+                    { id: 2, tag: 'Laptops', name: 'ZenBook Air', price: 950, desc: 'Ultra-thin design with incredible battery life for travelers.', images: ['https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1454165833267-033f23bca044?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1484788984921-03950022c9ae?auto=format&fit=crop&q=80&w=600'] },
+                    { id: 3, tag: 'Mobiles', name: 'Nexus X Fold', price: 1099, desc: 'Revolutionary folding screen with advanced camera sensors.', images: ['https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1592890288564-76628a30a657?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1573148195900-7845dcb9b127?auto=format&fit=crop&q=80&w=600'] },
+                    { id: 4, tag: 'Mobiles', name: 'LitePhone 12', price: 699, desc: 'Compact power with a stunning AMOLED display and 5G connectivity.', images: ['https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1556656793-062ff27d692e?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1533228100845-08145b01de14?auto=format&fit=crop&q=80&w=600'] },
+                    { id: 5, tag: 'Chargers', name: 'GaN Turbo 65W', price: 45, desc: 'Super-fast charging technology in a compact, portable block.', images: ['https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1619130730447-52643a677353?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1616432043562-3671ea2e5242?auto=format&fit=crop&q=80&w=600'] },
+                    { id: 6, tag: 'Chargers', name: 'MagSafe Wireless Pad', price: 35, desc: 'Magnetic alignment for efficient wireless power delivery.', images: ['https://images.unsplash.com/photo-1622445272461-c6580cab8755?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1615526675159-e248c3021d3f?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1585338447937-7082f8fc763d?auto=format&fit=crop&q=80&w=600'] },
+                    { id: 7, tag: 'Lamps', name: 'Modern Desk Glow', price: 85, desc: 'Minimalist LED lamp with adjustable brightness and color temp.', images: ['https://images.unsplash.com/photo-1534073828943-f801091bb18c?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1507473885765-e6ed657f9971?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?auto=format&fit=crop&q=80&w=600'] },
+                    { id: 8, tag: 'Lamps', name: 'Nordic Wood Base', price: 120, desc: 'Elegant wooden lamp for a warm, cozy atmosphere.', images: ['https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1517991104123-1d56a6e81ed9?auto=format&fit=crop&q=80&w=600'] },
+                    { id: 9, tag: 'Bulbs', name: 'Smart RGB Bulb', price: 25, desc: 'WiFi connected bulb with 16 million colors and voice control.', images: ['https://images.unsplash.com/photo-1550985616-10810253b84d?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1550684376-efcbd6e3f031?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1493612276216-ee3925520721?auto=format&fit=crop&q=80&w=600'] },
+                    { id: 10, tag: 'Bulbs', name: 'Vintage Edison LED', price: 15, desc: 'Classic aesthetic with modern energy-saving LED technology.', images: ['https://images.unsplash.com/photo-1517420812314-8e16167c1c0d?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1494249465471-5655b7878482?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1543145733-d0d5184273f4?auto=format&fit=crop&q=80&w=600'] },
+                ],
+                filteredItems() {
+                    if (this.activeTag === 'All') return this.items;
+                    return this.items.filter(i => i.tag === this.activeTag);
+                },
+                processPurchase(item) {
+                    if (confirm(`Authorize payment for ${item.name} ($${item.price})?`)) {
+                        const email = localStorage.getItem('user_email') || 'tech-shopper@email.com';
+                        setTimeout(() => {
+                            alert(`⚡ Transaction Complete!\n\nYour order for "${item.name}" has been booked. A confirmation email has been sent to ${email}.\n\nThank you for choosing Bhandari's Market Electronics!`);
+                        }, 1000);
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>

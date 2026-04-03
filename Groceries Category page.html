@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <a href="Landing_page.html" title>Bhandari's Market | Fresh Groceries</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body class="bg-stone-50 min-h-screen" x-data="groceryPage()">
+
+    <nav class="bg-white border-b border-stone-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-orange-600 rounded-lg flex items-center justify-center">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <a href="Landing_page.html" class="text-xl font-bold text-slate-800">Bhandari's <span class="text-orange-600">Market</span></a>
+            </div>
+            <div class="flex items-center space-x-6 text-sm font-semibold text-slate-600">
+                <a href="Home.html" class="hover:text-orange-600 transition">Home</a>
+                <span class="text-slate-300">/</span>
+                <span class="text-orange-600">Groceries</span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+            <div class="max-w-2xl">
+                <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">Farm Fresh <span class="text-green-600">Groceries</span></h1>
+                <p class="text-slate-500 mt-4 text-lg font-medium italic">"Directly from the soil to your kitchen table."</p>
+            </div>
+            
+            <div class="flex flex-wrap gap-2">
+                <template x-for="cat in ['All', 'Veggies', 'Fruits', 'Seeds', 'Juice', 'Salad']">
+                    <button 
+                        @click="activeTag = cat"
+                        :class="activeTag === cat ? 'bg-green-600 text-white' : 'bg-white text-slate-600 hover:bg-green-50 border-slate-200'"
+                        class="px-6 py-2.5 rounded-full text-xs font-black uppercase tracking-widest border transition-all shadow-sm"
+                        x-text="cat">
+                    </button>
+                </template>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
+            <template x-for="item in filteredItems()" :key="item.id">
+                <div class="bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-2xl transition-all duration-500 group flex flex-col">
+                    
+                    <div class="relative h-64 overflow-hidden" x-data="{ current: 0 }">
+                        <template x-for="(img, i) in item.images" :key="i">
+                            <img 
+                                x-show="current === i" 
+                                :src="img" 
+                                class="w-full h-full object-cover transform transition duration-1000 group-hover:scale-110"
+                                x-transition:enter="opacity-0 translate-x-4"
+                                x-transition:enter-end="opacity-100 translate-x-0"
+                            >
+                        </template>
+
+                        <div class="absolute inset-0 flex items-center justify-between px-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button @click="current = (current === 0 ? 2 : current - 1)" class="w-9 h-9 bg-white/90 rounded-full shadow-lg flex items-center justify-center text-slate-800 hover:bg-white transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <button @click="current = (current === 2 ? 0 : current + 1)" class="w-9 h-9 bg-white/90 rounded-full shadow-lg flex items-center justify-center text-slate-800 hover:bg-white transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                        </div>
+
+                        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-1.5">
+                            <template x-for="(img, i) in item.images">
+                                <div :class="current === i ? 'w-5 bg-green-500' : 'w-1.5 bg-white/60'" class="h-1.5 rounded-full transition-all"></div>
+                            </template>
+                        </div>
+
+                        <div class="absolute top-4 right-4">
+                            <span class="bg-white/95 backdrop-blur-sm text-slate-900 font-black px-4 py-1.5 rounded-full shadow-lg" x-text="'$' + item.price"></span>
+                        </div>
+                    </div>
+
+                    <div class="p-6 flex flex-col flex-grow">
+                        <div class="mb-4">
+                            <span class="text-green-600 text-[10px] font-black uppercase tracking-tighter" x-text="item.tag"></span>
+                            <h3 class="text-xl font-bold text-slate-800 mt-1" x-text="item.name"></h3>
+                            <p class="text-slate-500 text-sm mt-3 leading-relaxed" x-text="item.desc"></p>
+                        </div>
+                        
+                        <div class="mt-auto space-y-3">
+                            <button @click="processPurchase(item)" class="w-full bg-green-600 text-white font-bold py-4 rounded-2xl hover:bg-green-700 transition-all shadow-lg shadow-green-100 flex items-center justify-center gap-2 transform active:scale-95">
+                                Buy Now
+                            </button>
+                            <button class="w-full text-slate-400 font-bold text-xs py-2 hover:text-slate-600 transition tracking-widest uppercase">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </main>
+
+    <script>
+        function groceryPage() {
+            return {
+                activeTag: 'All',
+                items: [
+                    { id: 1, tag: 'Veggies', name: 'Heirloom Bell Peppers', price: 4.50, desc: 'Organic rainbow peppers packed with vitamin C.', images: ['https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1558449028-b53a39d100fc?auto=format&fit=crop&q=80&w=600'] },
+                    { id: 2, tag: 'Veggies', name: 'Garden Fresh Spinach', price: 2.99, desc: 'Triple-washed baby spinach leaves, rich in iron.', images: ['https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1551326844-4df70f78d0e9?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1615485242223-9366f07f59f6?auto=format&fit=crop&q=80&w=600'] },
+                    { id: 3, tag: 'Fruits', name: 'Ruby Red Strawberries', price: 5.25, desc: 'Succulent and sweet locally grown berries.', images: ['https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1582231246203-d09618a80479?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1543528176-61b239514dd3?auto=format&fit=crop&q=80&w=600'] },
+                    { id: 4, tag: 'Fruits', name: 'Zesty Honey Apples', price: 3.80, desc: 'Crisp apples with a perfect balance of tart and sweet.', images: ['https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1570913149827-d2ac84ab3f9a?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1610397648930-475581727742?auto=format&fit=crop&q=80&w=600'] },
+                    { id: 5, tag: 'Seeds', name: 'Premium Chia Seeds', price: 8.90, desc: 'Organic black chia seeds for your daily smoothie.', images: ['https://images.unsplash.com/photo-1523294587484-bb6ae4d3060d?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1583002621743-05f32997e742?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1628554270682-5d4897f4d5b6?auto=format&fit=crop&q=80&w=600'] },
+                    { id: 6, tag: 'Seeds', name: 'Roasted Pumpkin Seeds', price: 6.45, desc: 'Lightly salted and perfect for healthy snacking.', images: ['https://images.unsplash.com/photo-1508285892881-1d7c8ee9363a?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1635334122041-831904537119?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1596560548464-f010549b84d7?auto=format&fit=crop&q=80&w=600'] },
+                    { id: 7, tag: 'Juice', name: 'Cold Pressed Orange', price: 4.99, desc: '100% pure juice with no added sugar or preservatives.', images: ['https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1621506289937-4c721a939977?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1600271886311-ad8d7142c99f?auto=format&fit=crop&q=80&w=600'] },
+                    { id: 8, tag: 'Juice', name: 'Green Detox Elixir', price: 5.50, desc: 'A blend of cucumber, kale, and lemon for vitality.', images: ['https://images.unsplash.com/photo-1622597467822-f258ca836860?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1514361892635-6b07e31e75f9?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1528498033373-3c6c08e93d79?auto=format&fit=crop&q=80&w=600'] },
+                    { id: 9, tag: 'Salad', name: 'Mediterranean Bowl', price: 11.20, desc: 'Feta, olives, and fresh tomatoes over a bed of greens.', images: ['https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=600'] },
+                    { id: 10, tag: 'Salad', name: 'Quinoa & Avocado Salad', price: 12.50, desc: 'Protein-packed quinoa with creamy avocado chunks.', images: ['https://images.unsplash.com/photo-1515516969-d4008cc6241a?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1543339308-43e59d6b73a6?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&q=80&w=600'] },
+                ],
+                filteredItems() {
+                    if (this.activeTag === 'All') return this.items;
+                    return this.items.filter(i => i.tag === this.activeTag);
+                },
+                processPurchase(item) {
+                    if (confirm(`Authorize payment for ${item.name} ($${item.price})?`)) {
+                        const email = localStorage.getItem('user_email') || 'bazaar-shopper@email.com';
+                        // Simulate delay for transaction processing
+                        setTimeout(() => {
+                            alert(`🛒 Transaction Complete!\n\nYour order for "${item.name}" has been booked. A confirmation email has been sent to ${email}.\n\nThank you for choosing Bhandari's Market!`);
+                        }, 1000);
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
