@@ -38,3 +38,16 @@ A beautiful, modern, fully functional **local online marketplace** built with pu
 
 ## 📁 Project Structure
 
+Bhandari's-Market/
+├── Landing_page.html
+├── Home.html
+├── About.html
+├── Login page.html
+├── Profile.html
+├── My products.html
+├── Transaction_history.html
+├── category-clothes.html
+├── Accessories Category Page.html
+├── Groceries Category page.html
+├── Electronics category.html
+└── assets/ (images if added)
