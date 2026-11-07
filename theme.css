@@ -1,48 +1,80 @@
-/* Shared light/dark theme for the Bazaar pages. */
+/* Shared dark theme for every Bazaar page. */
 :root {
-    color-scheme: light;
-}
-
-html.dark-mode {
     color-scheme: dark;
+    --bazaar-bg: #17212b;
+    --bazaar-surface: #202d39;
+    --bazaar-surface-raised: #2a3946;
+    --bazaar-border: #3b4b58;
+    --bazaar-text: #e4edf3;
+    --bazaar-muted: #aab9c5;
+    --bazaar-blue: #8bd8ff;
+    --bazaar-blue-glow: rgb(139 216 255 / 24%);
 }
 
-html.dark-mode body {
-    background-color: #0f172a !important;
-    color: #e2e8f0 !important;
+html,
+body {
+    min-height: 100%;
+    background-color: var(--bazaar-bg);
+    color: var(--bazaar-text);
 }
 
-html.dark-mode :is(.bg-white, .bg-slate-50, .bg-stone-50) {
-    background-color: #1e293b !important;
+body {
+    background-color: var(--bazaar-bg) !important;
+    color: var(--bazaar-text);
 }
 
-html.dark-mode :is(.bg-slate-100, .bg-slate-200, .bg-gray-100, .bg-gray-50) {
-    background-color: #334155 !important;
+/* Convert the common light Tailwind surfaces to calm charcoal-blue surfaces. */
+:is(.bg-white, .bg-slate-50, .bg-stone-50, .bg-gray-50) {
+    background-color: var(--bazaar-surface) !important;
 }
 
-html.dark-mode :is(.text-slate-900, .text-slate-800, .text-slate-700, .text-slate-600, .text-gray-700, .text-gray-600) {
-    color: #e2e8f0 !important;
+:is(.bg-slate-100, .bg-slate-200, .bg-gray-100) {
+    background-color: var(--bazaar-surface-raised) !important;
 }
 
-html.dark-mode :is(.text-slate-500, .text-slate-400, .text-gray-500, .text-gray-400) {
-    color: #cbd5e1 !important;
+:is(.text-slate-900, .text-slate-800, .text-slate-700, .text-slate-600, .text-gray-700, .text-gray-600) {
+    color: var(--bazaar-text) !important;
 }
 
-html.dark-mode :is(.border-slate-100, .border-slate-200, .border-gray-100, .border-gray-200) {
-    border-color: #475569 !important;
+:is(.text-slate-500, .text-slate-400, .text-gray-500, .text-gray-400) {
+    color: var(--bazaar-muted) !important;
 }
 
-html.dark-mode input,
-html.dark-mode textarea,
-html.dark-mode select {
-    background-color: #1e293b !important;
-    color: #f8fafc !important;
-    border-color: #475569 !important;
+:is(.border-slate-100, .border-slate-200, .border-gray-100, .border-gray-200, .border-stone-200) {
+    border-color: var(--bazaar-border) !important;
 }
 
-html.dark-mode input::placeholder,
-html.dark-mode textarea::placeholder {
-    color: #94a3b8 !important;
+input,
+textarea,
+select {
+    background-color: var(--bazaar-surface) !important;
+    color: var(--bazaar-text) !important;
+    border-color: var(--bazaar-border) !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #8fa2b1 !important;
+}
+
+/* A light-blue hover/focus glow gives interactive elements a cool accent. */
+:where(a, button, [role="button"], input[type="submit"], input[type="button"], select) {
+    transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease, text-shadow 180ms ease;
+}
+
+:where(a, button, [role="button"], input[type="submit"], input[type="button"], select):hover,
+:where(a, button, [role="button"], input[type="submit"], input[type="button"], select):focus-visible {
+    outline-color: var(--bazaar-blue);
+    box-shadow: 0 0 0 2px rgb(139 216 255 / 18%), 0 0 18px var(--bazaar-blue-glow);
+}
+
+:where(a, button, [role="button"]):hover {
+    color: var(--bazaar-blue);
+}
+
+:where(a, button, [role="button"]):focus-visible {
+    outline: 2px solid var(--bazaar-blue);
+    outline-offset: 3px;
 }
 
 .theme-toggle {
@@ -53,40 +85,31 @@ html.dark-mode textarea::placeholder {
     display: inline-flex;
     align-items: center;
     gap: 0.45rem;
-    border: 1px solid #cbd5e1;
+    border: 1px solid var(--bazaar-border);
     border-radius: 9999px;
     padding: 0.5rem 0.85rem;
-    background: #fff;
-    color: #334155;
+    background: var(--bazaar-surface);
+    color: var(--bazaar-text);
     font: 600 0.875rem/1.2 Inter, sans-serif;
     cursor: pointer;
-    box-shadow: 0 2px 8px rgb(15 23 42 / 12%);
+    box-shadow: 0 2px 8px rgb(0 0 0 / 18%);
 }
 
 .theme-toggle:hover {
-    background: #fff7ed;
-    border-color: #fb923c;
+    background: var(--bazaar-surface-raised);
+    border-color: var(--bazaar-blue);
+    color: var(--bazaar-blue);
 }
 
 .theme-toggle:focus-visible {
-    outline: 3px solid #f97316;
+    outline: 3px solid var(--bazaar-blue);
     outline-offset: 3px;
 }
 
-html.dark-mode .theme-toggle {
-    background: #1e293b;
-    color: #f8fafc;
-    border-color: #475569;
-}
-
-html.dark-mode .theme-toggle:hover {
-    background: #334155;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-    body,
-    body * {
-        transition-property: background-color, border-color, color;
-        transition-duration: 180ms;
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
     }
 }
