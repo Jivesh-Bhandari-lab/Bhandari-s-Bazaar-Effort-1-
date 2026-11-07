@@ -3,11 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <a href="C:\Users\jbhan\.vscode\Online Market\Landing_page.html" title>Bhandari's Market = Your Local Online Bazaar</title>
+    <title>Bhandari's Market | Your Local Online Bazaar</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
+        .nav-link {
+            position: relative;
+            border-radius: .65rem;
+            padding: .55rem .8rem;
+            transition: color 220ms ease, background-color 220ms ease, box-shadow 220ms ease, text-shadow 220ms ease;
+        }
+        .nav-link:hover, .nav-link:focus-visible {
+            color: #c2410c;
+            background: #fff7ed;
+            box-shadow: 0 0 10px rgba(249,115,22,.32), 0 0 24px rgba(249,115,22,.18);
+            text-shadow: 0 0 12px rgba(249,115,22,.35);
+            outline: none;
+        }
+        .tilt-card {
+            --tilt-x: 0deg;
+            --tilt-y: 0deg;
+            transform: perspective(1000px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+            transform-style: preserve-3d;
+            transition: transform 180ms ease-out, box-shadow 300ms ease;
+            will-change: transform;
+        }
+        .tilt-card:hover { box-shadow: 0 24px 50px -18px rgba(15,23,42,.35); }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+            .tilt-card { transform: none !important; }
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900">
@@ -15,114 +41,55 @@
     <nav class="bg-white shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
-                <div class="flex-shrink-0 flex items-center">
-                    <span class="text-2xl font-bold text-orange-600 tracking-tight">
-                        Bhandari's Market
-                    </span>
+                <a href="Landing_page.html" class="flex items-center gap-3 rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-500" aria-label="Bhandari's Market home">
+                    <img src="https://drive.google.com/uc?export=view&id=1n5-WV8zv4naeoA7n3lnboTwmzGan0G6m" alt="Bhandari's Market logo" class="h-10 w-10 rounded-lg object-contain">
+                    <span class="text-xl sm:text-2xl font-bold text-orange-600 tracking-tight">Bhandari's Market</span>
+                </a>
+                <div class="hidden md:flex items-center gap-2">
+                    <a href="Home.html" class="nav-link text-gray-600 font-medium">Shop</a>
+                    <a href="About.html" class="nav-link text-gray-600 font-medium">About</a>
+                    <a href="Login page.html" class="nav-link text-gray-700 font-semibold">Login</a>
+                    <a href="Login page.html" class="ml-2 px-6 py-2.5 text-sm font-bold bg-orange-600 text-white rounded-full hover:bg-orange-700 transition-colors">Register</a>
                 </div>
-                
-                <div class="hidden md:flex items-center space-x-8">
-                    
-                    <a href="C:\Users\jbhan\.vscode\Online Market\Home.html" class="text-gray-600 hover:text-orange-600 transition font-medium">Shop</a>
-                    <a href="C:\Users\jbhan\.vscode\Online Market\About.html" class="text-gray-600 hover:text-orange-600 transition font-medium">About</a>
-                    <div class="flex items-center space-x-4 ml-4">
-                        <button onclick="window.location.href='C:/Users/jbhan/.vscode/Online Market/Login page.html'" class="px-5 py-2 text-sm font-semibold text-gray-700 hover:text-orange-600 transition">
-                            Login
-                        </button>
-                        <button  onclick="window.location.href='C:/Users/jbhan/.vscode/Online Market/Login page.html'" class="px-6 py-2.5 text-sm font-bold bg-orange-600 text-white rounded-full hover:bg-orange-700 transition shadow-md hover:shadow-lg">
-                            Register
-                        </button>
-                    </div>
-                </div>
-
-                <div class="md:hidden flex items-center">
-                    <button id="menu-btn" class="text-gray-600 hover:text-orange-600 focus:outline-none">
-                        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                    </button>
-                </div>
+                <button id="menu-btn" class="md:hidden text-gray-600 hover:text-orange-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded-lg p-2" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-menu">
+                    <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+                </button>
             </div>
         </div>
-
         <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 px-4 pt-2 pb-8 space-y-2 shadow-xl">
-            <a href="#" class="block px-3 py-3 text-lg font-medium text-gray-700 hover:bg-orange-50 rounded-lg">Home</a>
-            <a href="#" class="block px-3 py-3 text-lg font-medium text-gray-700 hover:bg-orange-50 rounded-lg">Shop</a>
-            <a href="#" class="block px-3 py-3 text-lg font-medium text-gray-700 hover:bg-orange-50 rounded-lg">About</a>
-            <div class="pt-4 flex flex-col space-y-3">
-                <button class="w-full text-center px-5 py-3 text-base font-bold text-gray-700 border border-gray-200 rounded-xl">
-                    Login
-                </button>
-                <button class="w-full text-center px-5 py-3 text-base font-bold bg-orange-600 text-white rounded-xl shadow-lg">
-                    Register
-                </button>
-            </div>
+            <a href="Home.html" class="block px-3 py-3 text-lg font-medium text-gray-700 hover:bg-orange-50 rounded-lg">Shop</a>
+            <a href="About.html" class="block px-3 py-3 text-lg font-medium text-gray-700 hover:bg-orange-50 rounded-lg">About</a>
+            <a href="Login page.html" class="block px-3 py-3 text-lg font-medium text-gray-700 hover:bg-orange-50 rounded-lg">Login / Register</a>
         </div>
     </nav>
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-24 md:pt-24 md:pb-32">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            
             <div class="text-center lg:text-left space-y-8">
                 <div>
-                    <h1 class="text-5xl md:text-7xl font-extrabold text-slate-900 leading-tight">
-                        Fresh Groceries at <br />
-                        <span class="text-orange-600">Bhandari's Market</span>
-                    </h1>
-                    <p class="mt-6 text-xl md:text-2xl text-gray-500 font-light italic">
-                        "Your Local Online Bazaar"
-                    </p>
+                    <h1 class="text-5xl md:text-7xl font-extrabold text-slate-900 leading-tight">Fresh Groceries at <br /><span class="text-orange-600">Bhandari's Market</span></h1>
+                    <p class="mt-6 text-xl md:text-2xl text-gray-500 font-light italic">"Your Local Online Bazaar"</p>
                 </div>
-                
-                <p class="text-gray-600 text-lg md:text-xl max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                    Experience the charm of your neighborhood market from the comfort of your home. 
-                    Farm-fresh produce, authentic spices, and daily essentials delivered to your doorstep.
-                </p>
-
+                <p class="text-gray-600 text-lg md:text-xl max-w-xl mx-auto lg:mx-0 leading-relaxed">Experience the charm of your neighborhood market from the comfort of your home. Farm-fresh produce, authentic spices, and daily essentials delivered to your doorstep.</p>
                 <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-5 pt-4">
-                    <a href="Groceries Category page.html">
-                    <button class="px-10 py-5 bg-orange-600 text-white font-bold rounded-2xl hover:bg-orange-700 transition-all shadow-xl hover:shadow-orange-200 text-lg transform hover:-translate-y-1">
-                        Start Shopping</button>
-                    </a>
-                    <a href="Home.html">
-                    <button class="px-10 py-5 bg-white text-orange-600 font-bold border-2 border-orange-600 rounded-2xl hover:bg-orange-50 transition-all text-lg shadow-sm">
-                        View Daily Deals
-                    </button>
-                    </a>
+                    <a href="Groceries Category page.html" class="px-10 py-5 bg-orange-600 text-white font-bold rounded-2xl hover:bg-orange-700 transition-all shadow-xl hover:shadow-orange-200 text-lg transform hover:-translate-y-1">Start Shopping</a>
+                    <a href="Home.html" class="px-10 py-5 bg-white text-orange-600 font-bold border-2 border-orange-600 rounded-2xl hover:bg-orange-50 transition-all text-lg shadow-sm">View Daily Deals</a>
                 </div>
-
                 <div class="flex flex-wrap justify-center lg:justify-start gap-6 pt-8 text-sm font-semibold text-gray-500 uppercase tracking-wider">
-                    <div class="flex items-center">
-                        <span class="mr-2 text-green-500 text-xl">✓</span> 30-Min Delivery
-                    </div>
-                    <div class="flex items-center">
-                        <span class="mr-2 text-green-500 text-xl">✓</span> Locally Sourced
-                    </div>
-                    <div class="flex items-center">
-                        <span class="mr-2 text-green-500 text-xl">✓</span> Eco-Friendly
-                    </div>
+                    <div><span class="mr-2 text-green-500 text-xl">✓</span>30-Min Delivery</div>
+                    <div><span class="mr-2 text-green-500 text-xl">✓</span>Locally Sourced</div>
+                    <div><span class="mr-2 text-green-500 text-xl">✓</span>Eco-Friendly</div>
                 </div>
             </div>
-
-            <div class="relative group">
+            <div class="relative group [perspective:1000px]">
                 <div class="absolute -top-10 -left-10 w-40 h-40 bg-orange-100 rounded-full mix-blend-multiply filter blur-2xl opacity-70 animate-pulse"></div>
                 <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-yellow-100 rounded-full mix-blend-multiply filter blur-2xl opacity-70 animate-pulse"></div>
-                
-                <div class="relative overflow-hidden rounded-3xl shadow-2xl transform transition duration-700 group-hover:rotate-1">
-                    <img 
-                        src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=1000" 
-                        alt="Fresh produce bazaar" 
-                        class="w-full h-[500px] object-cover"
-                    />
+                <div class="tilt-card relative overflow-hidden rounded-3xl shadow-2xl" id="hero-card">
+                    <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=1000" alt="Fresh produce bazaar" class="w-full h-[500px] object-cover" />
                     <div class="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-lg border border-white/20">
                         <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-xs font-bold text-orange-600 uppercase tracking-widest">Featured Today</p>
-                                <p class="text-lg font-bold text-slate-800">Organic Farm Basket</p>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-2xl font-black text-slate-900">$12.99</p>
-                            </div>
+                            <div><p class="text-xs font-bold text-orange-600 uppercase tracking-widest">Featured Today</p><p class="text-lg font-bold text-slate-800">Organic Farm Basket</p></div>
+                            <p class="text-2xl font-black text-slate-900">$12.99</p>
                         </div>
                     </div>
                 </div>
@@ -131,22 +98,32 @@
     </main>
 
     <footer class="bg-white border-t border-slate-200 py-10 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-gray-400 text-sm">
-                &copy; 2026 Bhandari's Market. All rights reserved. 
-                <span class="block mt-1">Bringing the authentic bazaar experience to your fingertips.</span>
-            </p>
-        </div>
+        <div class="max-w-7xl mx-auto px-4 text-center"><p class="text-gray-400 text-sm">&copy; 2026 Bhandari's Market. All rights reserved.<span class="block mt-1">Bringing the authentic bazaar experience to your fingertips.</span></p></div>
     </footer>
 
     <script>
-        // Mobile Menu Toggle Script
-        const btn = document.getElementById('menu-btn');
-        const menu = document.getElementById('mobile-menu');
-
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
+        const menuButton = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuButton.addEventListener('click', () => {
+            const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
+            menuButton.setAttribute('aria-expanded', String(!isExpanded));
+            mobileMenu.classList.toggle('hidden');
         });
+
+        const heroCard = document.getElementById('hero-card');
+        if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            heroCard.addEventListener('pointermove', event => {
+                const bounds = heroCard.getBoundingClientRect();
+                const x = (event.clientX - bounds.left) / bounds.width;
+                const y = (event.clientY - bounds.top) / bounds.height;
+                heroCard.style.setProperty('--tilt-x', `${(0.5 - y) * 5}deg`);
+                heroCard.style.setProperty('--tilt-y', `${(x - 0.5) * 5}deg`);
+            });
+            heroCard.addEventListener('pointerleave', () => {
+                heroCard.style.setProperty('--tilt-x', '0deg');
+                heroCard.style.setProperty('--tilt-y', '0deg');
+            });
+        }
     </script>
 </body>
 </html>
