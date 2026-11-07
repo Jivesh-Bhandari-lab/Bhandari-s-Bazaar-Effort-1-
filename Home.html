@@ -3,28 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <a href="Landing_page.html" title>Bhandari's Market | Home</title>
+    <title>Bhandari's Market | Home</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .category-card:hover img { transform: scale(1.1); }
+
+        .nav-link {
+            position: relative;
+            border-radius: 0.65rem;
+            padding: 0.55rem 0.8rem;
+            transition: color 220ms ease, background-color 220ms ease, box-shadow 220ms ease, text-shadow 220ms ease;
+        }
+        .nav-link:hover, .nav-link:focus-visible {
+            color: #c2410c;
+            background-color: #fff7ed;
+            box-shadow: 0 0 10px rgba(249, 115, 22, 0.32), 0 0 24px rgba(249, 115, 22, 0.18);
+            text-shadow: 0 0 12px rgba(249, 115, 22, 0.35);
+            outline: none;
+        }
+
+        .category-card {
+            --tilt-x: 0deg;
+            --tilt-y: 0deg;
+            transform: perspective(1000px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) translateY(0);
+            transform-style: preserve-3d;
+            transition: transform 180ms ease-out, box-shadow 300ms ease, border-color 300ms ease;
+            will-change: transform;
+        }
+        .category-card:hover {
+            box-shadow: 0 22px 45px -18px rgba(15, 23, 42, 0.32);
+            border-color: rgba(249, 115, 22, 0.42);
+        }
+        .category-card:focus-visible {
+            outline: 3px solid rgba(249, 115, 22, 0.72);
+            outline-offset: 4px;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
+            .category-card { transform: none !important; }
+        }
     </style>
 </head>
 <body class="bg-slate-50 min-h-screen">
 
     <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
-            <span class="text-xl font-bold text-orange-600">Bhandari's Market</span>
-            
-            <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
-                <a href="Landing_page.html" class="text-orange-600">Home</a>
-                <a href="My products.html" class="hover:text-orange-600 transition">My Products</a>
-                <a href="Transaction_history.html" class="hover:text-orange-600 transition">Orders</a>
-                <a href="profile.html" class="flex items-center gap-2 hover:text-orange-600 transition border-l pl-6 border-slate-200">
-                    <div class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center text-orange-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/></svg>
-                    </div>
+            <a href="Landing_page.html" class="flex items-center gap-3 rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-500" aria-label="Bhandari's Market home">
+                <img src="https://drive.google.com/uc?export=view&id=1n5-WV8zv4naeoA7n3lnboTwmzGan0G6m" alt="Bhandari's Market logo" class="h-10 w-10 rounded-lg object-contain">
+                <span class="text-xl font-bold text-orange-600">Bhandari's Market</span>
+            </a>
+
+            <div class="hidden md:flex items-center space-x-2 text-sm font-medium text-slate-600">
+                <a href="Landing_page.html" class="nav-link text-orange-600" aria-current="page">Home</a>
+                <a href="My products.html" class="nav-link">My Products</a>
+                <a href="Transaction_history.html" class="nav-link">Orders</a>
+                <a href="Profile.html" class="nav-link flex items-center gap-2 border-l pl-4 border-slate-200">
+                    <span class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center text-orange-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/></svg>
+                    </span>
                     Profile
                 </a>
             </div>
@@ -37,8 +74,7 @@
             <p class="text-slate-500 mt-2 text-lg">Pick a category to start discovering quality local goods.</p>
         </header>
 
-        <div id="category-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            </div>
+        <div id="category-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"></div>
     </main>
 
     <footer class="mt-20 py-10 border-t border-slate-200 text-center text-slate-400 text-sm italic">
@@ -46,53 +82,63 @@
     </footer>
 
     <script>
-        // # CONFIGURATION: Add your local webpage paths here
         const categories = [
-            { 
-                name: 'Clothes', 
+            {
+                name: 'Clothes',
                 img: 'https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?auto=format&fit=crop&q=80&w=500',
-                link: 'category-clothes.html' // # Add clothes page path here
+                link: 'category-clothes.html'
             },
-            { 
-                name: 'Accessories', 
+            {
+                name: 'Accessories',
                 img: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=500',
-                link: 'Accessories Category Page.html' // # Add accessories page path here
+                link: 'Accessories Category Page.html'
             },
-            { 
-                name: 'Groceries', 
+            {
+                name: 'Groceries',
                 img: 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=500',
-                link: 'Groceries Category page.html' // # Add groceries page path here
+                link: 'Groceries Category page.html'
             },
-            { 
-                name: 'Electronics', 
+            {
+                name: 'Electronics',
                 img: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?auto=format&fit=crop&q=80&w=500',
-                link: 'Electronics category.html' // # Add electronics page path here
+                link: 'Electronics category.html'
             }
         ];
 
-        // # RENDER: Injects cards into the HTML
         const container = document.getElementById('category-container');
-        container.innerHTML = categories.map(cat => `
-            <div onclick="navigateTo('${cat.link}')" class="category-card group cursor-pointer bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100">
+        container.innerHTML = categories.map(category => `
+            <a href="${category.link}" class="category-card group block cursor-pointer bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100" aria-label="Explore ${category.name}">
                 <div class="h-48 overflow-hidden bg-slate-200">
-                    <img src="${cat.img}" alt="${cat.name}" class="w-full h-full object-cover transition-transform duration-500">
+                    <img src="${category.img}" alt="${category.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                 </div>
                 <div class="p-6 flex justify-between items-center">
-                    <h3 class="text-xl font-bold text-slate-800">${cat.name}</h3>
-                    <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-orange-600 group-hover:text-white transition-colors">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                    </div>
+                    <h2 class="text-xl font-bold text-slate-800">${category.name}</h2>
+                    <span class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-600 group-hover:bg-orange-600 group-hover:text-white transition-colors" aria-hidden="true">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </span>
                 </div>
-            </div>
+            </a>
         `).join('');
 
-        // # NAVIGATION: Logic to open your webpages
-        function navigateTo(url) {
-            if(url && url !== 'undefined') {
-                window.location.href = url;
-            } else {
-                alert("Page link not set yet!");
-            }
+        const supportsFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (supportsFinePointer && !prefersReducedMotion) {
+            document.querySelectorAll('.category-card').forEach(card => {
+                card.addEventListener('pointermove', event => {
+                    const bounds = card.getBoundingClientRect();
+                    const relativeX = (event.clientX - bounds.left) / bounds.width;
+                    const relativeY = (event.clientY - bounds.top) / bounds.height;
+                    const maxTilt = 7;
+                    card.style.setProperty('--tilt-x', `${(0.5 - relativeY) * maxTilt}deg`);
+                    card.style.setProperty('--tilt-y', `${(relativeX - 0.5) * maxTilt}deg`);
+                });
+
+                card.addEventListener('pointerleave', () => {
+                    card.style.setProperty('--tilt-x', '0deg');
+                    card.style.setProperty('--tilt-y', '0deg');
+                });
+            });
         }
     </script>
 </body>
